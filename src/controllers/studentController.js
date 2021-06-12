@@ -3,7 +3,7 @@ const StudentService=require('../services/studentService')
 class StudenController{
     async InsertStudent(req,res){
         try {
-            const data=await StudentService.InsertStudent(req.body.idStudent,req.body.name,req.body.lastName,req.body.age,req.body.email)
+            const data=await StudentService.InsertStudent(req.body.idStudent,req.body.name,req.body.lastName,req.body.age,req.body.email,req.body.careername)
             if(data.StatusCode===201){
                 res.status(201)
             }
@@ -34,6 +34,15 @@ class StudenController{
     async GetAllStudents(req,res){
         try {
             const data=await StudentService.GetAllStudents()
+            res.json(data)
+        } catch (error) {
+            res.status(500)
+            res.json({StatusCode:500, Message: 'Internal error', Error: error})
+        }
+    }
+    async GetAllCareers(req,res){
+        try {
+            const data=await StudentService.GetAllCareers()
             res.json(data)
         } catch (error) {
             res.status(500)

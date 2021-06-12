@@ -6,4 +6,5 @@ router.post('/InsertStudent',studentController.InsertStudent)
 router.put('/UpdateStudent',studentController.UpdateStudent)
 router.get('/GetAllStudents',studentController.GetAllStudents)
 router.get('/GetInformationClass/:classname',studentController.GetInformationClass)
+router.get('/GetAllCareers',studentController.GetAllCareers)
 module.exports=router

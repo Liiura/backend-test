@@ -1,7 +1,7 @@
 const mysqlConnection=require('../database/databaseConfig')
 
 class StudentService{
-    async InsertStudent(idStudent, name, lastName, age, email){
+    async InsertStudent(idStudent, name, lastName, age, email, careername){
         try {
             const payload = await this.GetStudenById(idStudent,email)
             if(payload.Data.length === 0){
@@ -9,7 +9,7 @@ class StudentService{
                     mysqlConnection.getConnection(function(errConn,conn){
                         try {
                             if(!errConn){
-                                conn.query('CALL insertStudent(?,?,?,?,?)',[idStudent,name,lastName,age,email],(err)=>{
+                                conn.query('CALL insertStudent(?,?,?,?,?,?)',[idStudent,name,lastName,age,email,careername],(err)=>{
                                     if(!err){
                                         resolve({StatusCode:201,Message:'Sucesss'})
                                     }else{
@@ -57,6 +57,27 @@ class StudentService{
                 try {
                     if(!errConn){
                         conn.query('SELECT * FROM estudiantes',(err,rows)=>{
+                            if(!err){
+                                resolve({StatusCode:200,Message:'Sucesss', Data: rows})
+                            }else{
+                                reject(err)
+                            }
+                        })
+                    }else{
+                        reject(errConn)
+                    }
+                } catch (error) {
+                }
+            })
+        })
+    }
+    GetAllCareers(){
+        return new Promise((resolve,reject)=>{
+            const query="SELECT * FROM carreras INNER JOIN detalle_clases ON detalle_clases.nombrecarrera=carreras.nombrecarrera INNER JOIN clases ON detalle_clases.nombreclase=clases.nombreclase"
+            mysqlConnection.getConnection(function(errConn,conn){
+                try {
+                    if(!errConn){
+                        conn.query(query,(err,rows)=>{
                             if(!err){
                                 resolve({StatusCode:200,Message:'Sucesss', Data: rows})
                             }else{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2021 a las 03:11:38
+-- Tiempo de generación: 12-06-2021 a las 06:08:46
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 7.4.19
 
@@ -36,8 +36,9 @@ INNER JOIN estudiantes ON estudiantes.idestudiante=detalle_carreras.idestudiante
 WHERE clases.nombreclase=P_nombreclase;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertStudent` (IN `P_idestudiante` VARCHAR(255), IN `P_nombre` VARCHAR(255), IN `P_apellido` VARCHAR(255), IN `P_edad` INT, IN `P_correo` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertStudent` (IN `P_idestudiante` VARCHAR(255), IN `P_nombre` VARCHAR(255), IN `P_apellido` VARCHAR(255), IN `P_edad` INT, IN `P_correo` VARCHAR(255), IN `P_nombrecarrera` VARCHAR(255))  BEGIN
 INSERT INTO `estudiantes`(`idestudiante`, `Nombre`, `Apellido`, `Edad`, `Correo`) VALUES (P_idestudiante,P_nombre,P_apellido,P_edad,P_correo);
+INSERT INTO `detalle_carreras`(`idestudiante`, `nombrecarrera`) VALUES (P_idestudiante,P_nombrecarrera);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateStudent` (IN `P_idestudiante` VARCHAR(255), IN `P_nombre` VARCHAR(255), IN `P_apellido` VARCHAR(255), IN `P_edad` INT, IN `P_correo` VARCHAR(255))  BEGIN
@@ -109,7 +110,9 @@ INSERT INTO `detalle_carreras` (`idestudiante`, `nombrecarrera`) VALUES
 ('1007110962', 'matematicas'),
 ('1007110962', 'español'),
 ('1007110964', 'matematicas'),
-('1007110964', 'español');
+('1007110964', 'español'),
+('1549a', 'matematicas'),
+('14411s', 'matematicas');
 
 -- --------------------------------------------------------
 
@@ -169,7 +172,9 @@ CREATE TABLE `detalle_mentores` (
 
 INSERT INTO `detalle_mentores` (`idmentor`, `nombreclase`) VALUES
 ('102313ab', 'diptongo'),
-('102313ab', 'ortografia');
+('102313ab', 'ortografia'),
+('123bba', 'trigonometria'),
+('123bba', 'basicas');
 
 -- --------------------------------------------------------
 
@@ -200,6 +205,8 @@ INSERT INTO `estudiantes` (`idestudiante`, `Nombre`, `Apellido`, `Edad`, `Correo
 ('10557796', 'asdas', 'adasd', 55, 'sadasdas'),
 ('122', 'karrl', 'pers', 153, 'pers@correo.com'),
 ('12355', 'asda', 'asdad', 2, 'aaa@correo.com'),
+('14411s', 'styles', 'aaa', 5, 'styles@correo.com'),
+('1549a', 'carlos1', 'c', 2, 'alvaroandres1@correo.com'),
 ('1904', 'martha', 'valencia', 50, 'martha@correo.com'),
 ('5652', 'pipe', 'asd', 6, 'uno@correo.com'),
 ('77332', 'aasd', 'asdasd', 7874, 'ggardfdd'),
@@ -225,7 +232,8 @@ CREATE TABLE `mentores` (
 --
 
 INSERT INTO `mentores` (`idmentor`, `Nombre`, `Apellido`, `Edad`, `Experiencia`, `Correo`) VALUES
-('102313ab', 'alvaro', 'garon', 20, 3, 'alvaro@correo.com');
+('102313ab', 'alvaro', 'garon', 20, 3, 'alvaro@correo.com'),
+('123bba', 'carlos', 'sosa', 20, 4, 'carlos@correo.com');
 
 --
 -- Índices para tablas volcadas
